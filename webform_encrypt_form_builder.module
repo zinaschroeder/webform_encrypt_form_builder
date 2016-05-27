@@ -21,7 +21,8 @@ function webform_encrypt_form_builder_form_builder_properties($form_type) {
  */
 function webform_encrypt_form_builder_encrypt_form(&$form_state, $form_type, $element, $property) {
 
-  $form = array();
+  $component = &$element['#webform_component'];
+  $form = array();  
 
   $excluded_types = array('fieldset', 'managed_file', 'markup', 'pagebreak', 'hidden');
   if (!in_array($element['#type'], $excluded_types)) {
@@ -31,7 +32,7 @@ function webform_encrypt_form_builder_encrypt_form(&$form_state, $form_type, $el
       '#title' => t('Encrypt this field\'s value'),
       '#description' => t('!link to edit encryption settings.', array('!link' => l('Click here', 'admin/config/system/encrypt'))),
       '#type' => 'checkbox',
-      '#default_value' => $element['#encrypt'],
+      '#default_value' => isset($component['extra']['encrypt']) ? $component['extra']['encrypt'] : 0,
       '#weight' => 10,
     );
   }
